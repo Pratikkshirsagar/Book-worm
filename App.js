@@ -9,6 +9,7 @@ import {
   FlatList,
 } from 'react-native';
 import BookCount from './components/BookCount';
+import CustomActionButton from './components/CustomActionButton';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -32,6 +33,7 @@ export default function App() {
     setBooks([...books, book]);
     setTotalCount(totalCount + 1);
     setReadingCount(readingCount + 1);
+    setIsAddNewBookVisible(false);
   };
 
   const markAsRead = (selectedBook, index) => {
@@ -47,19 +49,12 @@ export default function App() {
         <View style={{ flex: 1, justifyContent: 'center', paddingLeft: 5 }}>
           <Text>{item}</Text>
         </View>
-        <TouchableOpacity onPress={() => markAsRead(item, index)}>
-          <View
-            style={{
-              width: 100,
-              height: 50,
-              backgroundColor: '#a5deba',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontWeight: 'bold', color: 'white' }}>Mark as Read</Text>
-          </View>
-        </TouchableOpacity>
+        <CustomActionButton
+          style={{ width: 100, backgroundColor: '#a5deba' }}
+          onPress={() => markAsRead(item, index)}
+        >
+          <Text style={{ fontWeight: 'bold', color: 'white' }}>Mark as Read</Text>
+        </CustomActionButton>
       </View>
     );
   };
@@ -87,32 +82,16 @@ export default function App() {
               placeholder="Enter Book Name"
               placeholderTextColor="grey"
             />
-            <TouchableOpacity onPress={() => addBook(textInputData)}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: '#a5deba',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons name="ios-checkmark" color="white" size={40} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={hideNewBook}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: '#deada5',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Ionicons name="ios-close" color="white" size={40} />
-              </View>
-            </TouchableOpacity>
+            <CustomActionButton
+              style={{ backgroundColor: '#a5deba' }}
+              onPress={() => addBook(textInputData)}
+            >
+              <Ionicons name="ios-checkmark" color="white" size={40} />
+            </CustomActionButton>
+
+            <CustomActionButton>
+              <Ionicons name="ios-close" color="white" size={40} onPress={hideNewBook} />
+            </CustomActionButton>
           </View>
         )}
 
@@ -127,23 +106,13 @@ export default function App() {
           }
         />
 
-        <TouchableOpacity
+        <CustomActionButton
+          position="right"
+          style={{ backgroundColor: '#AAD1E6', borderRadius: 25 }}
           onPress={showAddNewBook}
-          style={{ position: 'absolute', bottom: 20, right: 20 }}
         >
-          <View
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              backgroundColor: '#AAD1E6',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
-          </View>
-        </TouchableOpacity>
+          <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+        </CustomActionButton>
       </View>
 
       <View
