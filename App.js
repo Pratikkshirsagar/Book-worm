@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, FlatList } from 'react-native';
 import BookCount from './components/BookCount';
 import CustomActionButton from './components/CustomActionButton';
 
