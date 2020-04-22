@@ -14,6 +14,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CustomeDrawerComponent from './screens/DrawerNavigator/CustomeDrawerComponent';
 import colors from './assets/colors';
 
+import * as firebase from 'firebase/app';
+
 const App = () => <AppContainer />;
 
 const loginStackNavigator = createStackNavigator(
