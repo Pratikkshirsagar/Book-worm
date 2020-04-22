@@ -22,7 +22,6 @@ const WelcomeScreen = (props) => {
       <View
         style={{
           flex: 1,
-
           alignItems: 'center',
         }}
       >
