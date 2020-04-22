@@ -47,7 +47,7 @@ const WelcomeScreen = (props) => {
             borderColor: colors.bgError,
           }}
           title="Sign Up"
-          onPress={() => alert('Sign Up')}
+          onPress={() => props.navigation.navigate('SignUpScreen')}
         >
           <Text style={{ fontWeight: '100', color: 'white' }}>Sign Up</Text>
         </CustomActionButton>
