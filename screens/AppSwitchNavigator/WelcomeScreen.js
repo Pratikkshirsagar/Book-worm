@@ -34,21 +34,9 @@ const WelcomeScreen = (props) => {
             marginBottom: 10,
           }}
           title="Login in"
-          onPress={() => props.navigation.navigate('HomeScreen')}
+          onPress={() => props.navigation.navigate('LoginScreen')}
         >
           <Text style={{ fontWeight: '100', color: 'white' }}>Login</Text>
-        </CustomActionButton>
-        <CustomActionButton
-          style={{
-            width: 200,
-            backgroundColor: 'transparent',
-            borderWidth: 0.5,
-            borderColor: colors.bgError,
-          }}
-          title="Sign Up"
-          onPress={() => props.navigation.navigate('SignUpScreen')}
-        >
-          <Text style={{ fontWeight: '100', color: 'white' }}>Sign Up</Text>
         </CustomActionButton>
       </View>
     </View>

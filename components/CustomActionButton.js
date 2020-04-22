@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
 CustomActionButton.PropsTypes = {
   onPress: PropsTypes.func.isRequired,
   children: PropsTypes.element.isRequired,
-  style: PropsTypes.object,
 };
 
 export default CustomActionButton;

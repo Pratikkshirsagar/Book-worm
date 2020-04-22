@@ -7,6 +7,8 @@ const colors = {
   txtPlaceholder: 'grey',
   borderColor: '#E9E9E9',
   logoColor: '#bada55',
+  txtWhite: 'white',
+  bgTextInputDark: '#b6b6b6',
 };
 
 export default colors;
