@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -14,9 +14,16 @@ import { Ionicons } from '@expo/vector-icons';
 import CustomeDrawerComponent from './screens/DrawerNavigator/CustomeDrawerComponent';
 import colors from './assets/colors';
 
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-const App = () => <AppContainer />;
+import firebaseConfig from './config/config';
+// firebase init
+firebase.initializeApp(firebaseConfig);
+
+const App = () => {
+  return <AppContainer />;
+};
 
 const loginStackNavigator = createStackNavigator(
   {

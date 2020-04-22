@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput } from 'react-native';
 import colors from '../assets/colors';
 import CustomActionButton from '../components/CustomActionButton';
+import firebase from 'firebase/app';
 
-const LoginScreen = () => {
+const LoginScreen = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSignIn = () => {};
+  const onSignUp = async () => {
+    if (email && password) {
+      try {
+        const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      } catch (err) {
+        alert(err.message);
+      }
+    } else {
+      alert('Please Enter email and password');
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', paddingTop: 30 }}>
         <TextInput
           style={styles.textInput}
           placeholder="abc@example.com"
           placeholderTextColor={colors.bgTextInputDark}
           keyboardType="email-address"
+          onChangeText={(email) => setEmail(email)}
         />
         <TextInput
           style={styles.textInput}
           placeholder="enter password"
           placeholderTextColor={colors.bgTextInputDark}
           secureTextEntry
+          onChangeText={(password) => setPassword(password)}
         />
         <View style={{ alignItems: 'center' }}>
-          <CustomActionButton style={[styles.loginButtons, { borderColor: colors.bgPrimary }]}>
+          <CustomActionButton
+            style={[styles.loginButtons, { borderColor: colors.bgPrimary }]}
+            onPress={onSignIn}
+          >
             <Text style={{ color: 'white' }}>Login</Text>
           </CustomActionButton>
-          <CustomActionButton style={[styles.loginButtons, { borderColor: colors.bgError }]}>
+          <CustomActionButton
+            style={[styles.loginButtons, { borderColor: colors.bgError }]}
+            onPress={onSignUp}
+          >
             <Text style={{ color: 'white' }}>sign up</Text>
           </CustomActionButton>
         </View>
