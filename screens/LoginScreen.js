@@ -38,6 +38,7 @@ const LoginScreen = (props) => {
         if (response) {
           setIsLoading(false);
           //
+          onSignIn(email, password);
         }
       } catch (err) {
         setIsLoading(false);
