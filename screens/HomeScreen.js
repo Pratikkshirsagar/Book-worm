@@ -5,6 +5,8 @@ import CustomActionButton from '../components/CustomActionButton';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
+import { snapshotToArray } from '../helpers/firebaseHelpers';
+
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 
@@ -28,10 +30,21 @@ export default function App(props) {
     }
   };
 
+  const getBooks = async (user) => {
+    try {
+      const booksList = await firebase.database().ref('books').child(user.uid).once('value');
+      const booksArray = snapshotToArray(booksList);
+      setBooks(booksArray);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     const { navigation } = props;
     const user = navigation.getParam('user');
     setCurrentUserFun(user);
+    getBooks(user);
   }, []);
 
   const showAddNewBook = () => {
@@ -43,7 +56,6 @@ export default function App(props) {
   };
 
   const addBook = async (book) => {
-    console.log(book);
     try {
       const snapshot = await firebase
         .database()
@@ -86,7 +98,7 @@ export default function App(props) {
     return (
       <View style={styles.listItemContainer}>
         <View style={styles.listItemTitleContainer}>
-          <Text>{item}</Text>
+          <Text>{item.name}</Text>
         </View>
         <CustomActionButton style={styles.markAsReadButton} onPress={() => markAsRead(item, index)}>
           <Text style={styles.markAsReadButtonText}>Mark as Read</Text>
