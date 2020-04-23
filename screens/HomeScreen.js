@@ -7,12 +7,14 @@ import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 
 export default function App() {
-  const [totalCount, setTotalCount] = useState(0);
-  const [readingCount, setReadingCount] = useState(0);
-  const [readCount, setReadCount] = useState(0);
+  // const [totalCount, setTotalCount] = useState(0);
+  // const [readingCount, setReadingCount] = useState(0);
+  // const [readCount, setReadCount] = useState(0);
   const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
   const [textInputData, setTextInputData] = useState('');
   const [books, setBooks] = useState([]);
+  const [booksReading, setBooksReading] = useState([]);
+  const [booksRead, setBooksRead] = useState([]);
 
   const showAddNewBook = () => {
     setIsAddNewBookVisible(true);
@@ -24,16 +26,17 @@ export default function App() {
 
   const addBook = (book) => {
     setBooks([...books, book]);
-    setTotalCount(totalCount + 1);
-    setReadingCount(readingCount + 1);
+    setBooksReading([...booksReading, book]);
     setIsAddNewBookVisible(false);
   };
 
   const markAsRead = (selectedBook, index) => {
-    let newList = books.filter((book) => book !== selectedBook);
-    setBooks(newList);
-    setReadingCount(readingCount - 1);
-    setReadCount(readCount + 1);
+    let newbooks = books.filter((book) => book !== selectedBook);
+    let newbooksReading = booksReading.filter((book) => book !== selectedBook);
+
+    setBooks(newbooks);
+    setBooksReading(newbooksReading);
+    setBooksRead([...booksRead, selectedBook]);
   };
 
   const renderItem = (item, index) => {
@@ -98,9 +101,9 @@ export default function App() {
       </View>
 
       <View style={styles.footer}>
-        <BookCount title="Total" count={totalCount} />
-        <BookCount title="Reading" count={readingCount} />
-        <BookCount title="Read" count={readCount} />
+        <BookCount title="Total" count={books.length} />
+        <BookCount title="Reading" count={booksReading.length} />
+        <BookCount title="Read" count={booksRead.length} />
       </View>
       <SafeAreaView />
     </View>
