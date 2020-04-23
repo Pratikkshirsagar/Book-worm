@@ -34,7 +34,13 @@ export default function App(props) {
     try {
       const booksList = await firebase.database().ref('books').child(user.uid).once('value');
       const booksArray = snapshotToArray(booksList);
+
+      let booksReadingNewList = booksArray.filter((book) => !book.read);
+      let booksReadNewList = booksArray.filter((book) => book.read);
+
       setBooks(booksArray);
+      setBooksReading(booksReadingNewList);
+      setBooksRead(booksReadNewList);
     } catch (err) {
       console.log(err);
     }
