@@ -4,6 +4,7 @@ import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
+import LoadingScreen from './screens/AppSwitchNavigator/LoadingScreen';
 import {
   createSwitchNavigator,
   createAppContainer,
@@ -25,7 +26,7 @@ const App = () => {
   return <AppContainer />;
 };
 
-const loginStackNavigator = createStackNavigator(
+const LoginStackNavigator = createStackNavigator(
   {
     WelcomeScreen: {
       screen: WelcomeScreen,
@@ -71,7 +72,8 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
-  loginStackNavigator,
+  LoadingScreen,
+  LoginStackNavigator,
   AppDrawerNavigator,
 });
 

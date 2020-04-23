@@ -2,7 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomActionButton from '../components/CustomActionButton';
 import colors from '../assets/colors';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 const SettingsScreen = (props) => {
+  const signOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      props.navigation.navigate('WelcomeScreen');
+    } catch (err) {
+      alert('Unable to sign out');
+    }
+  };
   return (
     <View style={styles.container}>
       <CustomActionButton
@@ -13,7 +24,7 @@ const SettingsScreen = (props) => {
           borderColor: colors.bgError,
         }}
         title="Sign Up"
-        onPress={() => props.navigation.navigate('WelcomeScreen')}
+        onPress={signOut}
       >
         <Text style={{ fontWeight: '100', color: 'white' }}>Log Out</Text>
       </CustomActionButton>
