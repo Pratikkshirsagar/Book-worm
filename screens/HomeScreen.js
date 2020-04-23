@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, FlatList } from 'react-native';
 import BookCount from '../components/BookCount';
 import CustomActionButton from '../components/CustomActionButton';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 
-export default function App() {
+export default function App(props) {
   // const [totalCount, setTotalCount] = useState(0);
   // const [readingCount, setReadingCount] = useState(0);
   // const [readCount, setReadCount] = useState(0);
+  const [currentUser, setCurrentUser] = useState('');
   const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
   const [textInputData, setTextInputData] = useState('');
   const [books, setBooks] = useState([]);
   const [booksReading, setBooksReading] = useState([]);
   const [booksRead, setBooksRead] = useState([]);
+
+  const setCurrentUserFun = async (user) => {
+    try {
+      let currentUserData = await firebase.database().ref('users').child(user.uid).once('value');
+      setCurrentUser(currentUserData.val());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const { navigation } = props;
+    const user = navigation.getParam('user');
+    setCurrentUserFun(user);
+  }, []);
 
   const showAddNewBook = () => {
     setIsAddNewBookVisible(true);
@@ -24,10 +42,35 @@ export default function App() {
     setIsAddNewBookVisible(false);
   };
 
-  const addBook = (book) => {
-    setBooks([...books, book]);
-    setBooksReading([...booksReading, book]);
-    setIsAddNewBookVisible(false);
+  const addBook = async (book) => {
+    console.log(book);
+    try {
+      const snapshot = await firebase
+        .database()
+        .ref('books')
+        .child(currentUser.uid)
+        .orderByChild('name')
+        .equalTo(book)
+        .once('value');
+
+      if (snapshot.exists()) {
+        alert('Unable to add as book already exist');
+      } else {
+        const key = await firebase.database().ref('books').child(currentUser.uid).push().key;
+        const response = await firebase
+          .database()
+          .ref('books')
+          .child(currentUser.uid)
+          .child(key)
+          .set({ name: book, read: false });
+
+        setBooks([...books, book]);
+        setBooksReading([...booksReading, book]);
+        setIsAddNewBookVisible(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const markAsRead = (selectedBook, index) => {
